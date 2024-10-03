@@ -106,23 +106,12 @@ pipeline {
                         }
                     }
                 }
-                stage('Prepare Build Context') {
-                    steps {
-                        sh 'ls -R'
-                        sh 'cat Dockerfile'
-                    }
-                }
                 stage('Build and Push Docker Image') {
                     steps {
                         echo "Building and Pushing image"
                         container('kaniko') {
                             withEnv(['DOCKER_CONFIG=/kaniko/.docker']) {
                                 sh """
-                                echo "Current working directory:"
-                                pwd
-                                echo "Contents of current directory:"
-                                ls -la
-
                                 /kaniko/executor \\
                                 --context `pwd` \\
                                 --destination ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} \\
