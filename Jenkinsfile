@@ -116,7 +116,9 @@ pipeline {
                                 --destination ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} \\
                                 --destination ${env.DOCKER_IMAGE}:latest \\
                                 --dockerfile Dockerfile \\
-                                --verbosity debug
+                                --verbosity debug \\
+                                --build-arg JAR_FILE=target/${env.APP_NAME}-0.0.1-SNAPSHOT.jar \\
+                                --build-arg SPRING_PROFILES_ACTIVE=${env.ENVIRONMENT} \\
                                 """
                             }
                         }
