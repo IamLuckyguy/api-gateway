@@ -23,6 +23,7 @@ pipeline {
             agent {
                 kubernetes {
                     yaml "${env.K8S_CONFIG}"
+                    podRetention never()
                 }
             }
 
@@ -116,7 +117,8 @@ pipeline {
                                 --destination ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} \\
                                 --destination ${env.DOCKER_IMAGE}:latest \\
                                 --dockerfile Dockerfile \\
-                                --verbosity debug
+                                --verbosity info \\
+                                --build-arg SPRING_PROFILES_ACTIVE=${params.ENV} \\
                                 """
                             }
                         }
