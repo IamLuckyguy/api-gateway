@@ -119,7 +119,7 @@ pipeline {
                                 --dockerfile Dockerfile \\
                                 --verbosity debug \\
                                 --build-arg JAR_FILE=target/${env.APP_NAME}-0.0.1-SNAPSHOT.jar \\
-                                --build-arg SPRING_PROFILES_ACTIVE=${env.ENVIRONMENT} \\
+                                --build-arg SPRING_PROFILES_ACTIVE=${params.ENV} \\
                                 """
                             }
                         }
