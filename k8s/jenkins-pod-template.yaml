@@ -36,6 +36,7 @@ spec:
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
+  restartPolicy: Never
   volumes:
     - name: docker-config
       secret:
