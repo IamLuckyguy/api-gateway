@@ -106,19 +106,29 @@ pipeline {
                         }
                     }
                 }
+                stage('Prepare Build Context') {
+                    steps {
+                        sh 'ls -R'
+                        sh 'cat Dockerfile'
+                    }
+                }
                 stage('Build and Push Docker Image') {
                     steps {
                         echo "Building and Pushing image"
                         container('kaniko') {
                             withEnv(['DOCKER_CONFIG=/kaniko/.docker']) {
                                 sh """
+                                echo "Current working directory:"
+                                pwd
+                                echo "Contents of current directory:"
+                                ls -la
+
                                 /kaniko/executor \\
                                 --context `pwd` \\
                                 --destination ${env.DOCKER_IMAGE}:${env.DOCKER_TAG} \\
                                 --destination ${env.DOCKER_IMAGE}:latest \\
                                 --dockerfile Dockerfile \\
                                 --verbosity info \\
-                                --build-arg JAR_FILE=target/${env.APP_NAME}-0.0.1-SNAPSHOT.jar \\
                                 --build-arg SPRING_PROFILES_ACTIVE=${params.ENV} \\
                                 """
                             }
