@@ -19,6 +19,6 @@ if [ -z "$JAR_FILE" ]; then\n\
     echo "No JAR file found in the current directory"\n\
     exit 1\n\
 fi\n\
-exec java -jar $JAR_FILE' > /app/run.sh && chmod +x /app/run.sh
+exec java -Dspring.profiles.active=$SPRING_PROFILES_ACTIVE -jar $JAR_FILE' > /app/run.sh && chmod +x /app/run.sh
 
 ENTRYPOINT ["/app/run.sh"]
